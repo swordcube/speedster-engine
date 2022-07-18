@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scripts/character.gd" type="Script" id=1]
+[ext_resource path="res://assets/images/characters/sonic/sonic.tres" type="SpriteFrames" id=2]
+[ext_resource path="res://assets/images/characters/sonic/spindash_dust.tres" type="SpriteFrames" id=3]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 21.0
+height = 28.0
+
+[node name="Sonic" type="KinematicBody2D"]
+script = ExtResource( 1 )
+speed = 20.0
+slipperyness = 0.965
+gravity = 20.0
+jumpForce = 600.0
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 2, 2 )
+frames = ExtResource( 2 )
+animation = "idle"
+playing = true
+
+[node name="SpindashDust" type="AnimatedSprite" parent="."]
+visible = false
+scale = Vector2( 2, 2 )
+frames = ExtResource( 3 )
+frame = 1
+speed_scale = 2.0
+playing = true
+offset = Vector2( -10, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 13 )
+shape = SubResource( 1 )
