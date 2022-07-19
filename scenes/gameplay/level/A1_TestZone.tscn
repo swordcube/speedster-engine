@@ -1,71 +1,129 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/gameplay/level/testzone/Block.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/gameplay/characters/sonic.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/Level.gd" type="Script" id=3]
+[ext_resource path="res://scenes/gameplay/level/objects/Monitor.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/gameplay/level/objects/Ring.tscn" type="PackedScene" id=5]
 
 [node name="A1_TestZone" type="Node2D"]
 script = ExtResource( 3 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 260, -42 )
+z_index = 1
 
-[node name="wall" parent="." instance=ExtResource( 1 )]
+[node name="Monitors" type="Node" parent="."]
+
+[node name="Monitor" parent="Monitors" instance=ExtResource( 4 )]
+position = Vector2( 1648, -65 )
+type = "ring"
+
+[node name="Monitor2" parent="Monitors" instance=ExtResource( 4 )]
+position = Vector2( 1712, -65 )
+type = "speed"
+
+[node name="Monitor3" parent="Monitors" instance=ExtResource( 4 )]
+position = Vector2( 1776, -65 )
+type = "fire"
+
+[node name="Monitor4" parent="Monitors" instance=ExtResource( 4 )]
+position = Vector2( 1840, -65 )
+type = "lightning"
+
+[node name="Monitor5" parent="Monitors" instance=ExtResource( 4 )]
+position = Vector2( 1904, -65 )
+type = "bubble"
+
+[node name="Monitor6" parent="Monitors" instance=ExtResource( 4 )]
+position = Vector2( 1968, -65 )
+type = "invincibility"
+
+[node name="Monitor7" parent="Monitors" instance=ExtResource( 4 )]
+position = Vector2( 2032, -65 )
+type = "eggman"
+
+[node name="Rings" type="Node" parent="."]
+
+[node name="Ring" parent="Rings" instance=ExtResource( 5 )]
+position = Vector2( 872, -34 )
+
+[node name="Ring2" parent="Rings" instance=ExtResource( 5 )]
+position = Vector2( 936, -17 )
+
+[node name="Ring3" parent="Rings" instance=ExtResource( 5 )]
+position = Vector2( 994, 19 )
+
+[node name="Ring4" parent="Rings" instance=ExtResource( 5 )]
+position = Vector2( 1060, 40 )
+
+[node name="Ring5" parent="Rings" instance=ExtResource( 5 )]
+position = Vector2( 1135, 29 )
+
+[node name="Ring6" parent="Rings" instance=ExtResource( 5 )]
+position = Vector2( 1199, 9 )
+
+[node name="Ring7" parent="Rings" instance=ExtResource( 5 )]
+position = Vector2( 1238, -45 )
+
+[node name="Level" type="Node" parent="."]
+
+[node name="wall" parent="Level" instance=ExtResource( 1 )]
 position = Vector2( -402, -970 )
 scale = Vector2( 20, 50 )
 
-[node name="ground" parent="." instance=ExtResource( 1 )]
+[node name="ground" parent="Level" instance=ExtResource( 1 )]
 position = Vector2( 400, 402 )
 scale = Vector2( 20, 20 )
 
-[node name="ground2" parent="." instance=ExtResource( 1 )]
+[node name="ground2" parent="Level" instance=ExtResource( 1 )]
 position = Vector2( 534, 441 )
 scale = Vector2( 20, 20 )
 
-[node name="ground3" parent="." instance=ExtResource( 1 )]
+[node name="ground3" parent="Level" instance=ExtResource( 1 )]
 position = Vector2( 584, 466 )
 scale = Vector2( 20, 20 )
 
-[node name="ground4" parent="." instance=ExtResource( 1 )]
+[node name="ground4" parent="Level" instance=ExtResource( 1 )]
 position = Vector2( 754, 493 )
 scale = Vector2( 20, 20 )
 
-[node name="ground5" parent="." instance=ExtResource( 1 )]
+[node name="ground5" parent="Level" instance=ExtResource( 1 )]
 position = Vector2( 1017, 482 )
 scale = Vector2( 20, 20 )
 
-[node name="ground6" parent="." instance=ExtResource( 1 )]
+[node name="ground6" parent="Level" instance=ExtResource( 1 )]
 position = Vector2( 1611, 464 )
 scale = Vector2( 20, 20 )
 
-[node name="ground7" parent="." instance=ExtResource( 1 )]
+[node name="ground7" parent="Level" instance=ExtResource( 1 )]
 position = Vector2( 1645, 401 )
 scale = Vector2( 20, 20 )
 
-[node name="ground8" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1668, 367 )
-scale = Vector2( 20, 20 )
+[node name="ground8" parent="Level" instance=ExtResource( 1 )]
+position = Vector2( 2268, 367 )
+scale = Vector2( 50, 20 )
 
-[node name="Block" parent="." instance=ExtResource( 1 )]
+[node name="Block" parent="Level" instance=ExtResource( 1 )]
 position = Vector2( 857, 28 )
 rotation = 0.109956
 scale = Vector2( 3, 1 )
 
-[node name="Block2" parent="." instance=ExtResource( 1 )]
+[node name="Block2" parent="Level" instance=ExtResource( 1 )]
 position = Vector2( 960, 63 )
 rotation = 0.548033
 scale = Vector2( 3, 1 )
 
-[node name="Block3" parent="." instance=ExtResource( 1 )]
+[node name="Block3" parent="Level" instance=ExtResource( 1 )]
 position = Vector2( 1058, 90 )
 scale = Vector2( 3, 1 )
 
-[node name="Block4" parent="." instance=ExtResource( 1 )]
+[node name="Block4" parent="Level" instance=ExtResource( 1 )]
 position = Vector2( 1170, 79 )
 rotation = -0.218166
 scale = Vector2( 3, 1 )
 
-[node name="Block5" parent="." instance=ExtResource( 1 )]
+[node name="Block5" parent="Level" instance=ExtResource( 1 )]
 position = Vector2( 1251, 28 )
 rotation = -0.980875
 scale = Vector2( 3, 1 )

@@ -17,6 +17,9 @@ func _process(delta):
 	Global.time += delta
 	position_camera()
 	
+	if player.position.y > 10000:
+		OS.kill(OS.get_process_id())
+	
 	if player.is_looking_up or player.is_ducking:
 		your_mom_timer += delta
 		if your_mom_timer > 2:
