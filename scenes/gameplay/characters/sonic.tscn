@@ -11,7 +11,7 @@ height = 28.0
 [node name="Sonic" type="KinematicBody2D"]
 script = ExtResource( 1 )
 speed = 5.0
-speedCap = 600.0
+speedCap = 700.0
 slipperyness = 0.965
 gravity = 20.0
 jumpForce = 600.0
@@ -26,7 +26,7 @@ playing = true
 visible = false
 scale = Vector2( 2, 2 )
 frames = ExtResource( 3 )
-frame = 2
+frame = 4
 speed_scale = 2.0
 playing = true
 offset = Vector2( -10, 0 )

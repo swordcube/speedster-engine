@@ -49,9 +49,7 @@ func _physics_process(delta):
 			velocity.x = -1500.0 if sprite.flip_h else 1500.0
 			
 		is_jumping = false
-		rotation = lerp(rotation, get_floor_normal().angle() + PI/2, 0.35)
-		if is_rolling:
-			sprite.rotation = -rotation
+		rotation = get_floor_normal().angle() + PI/2
 	else:
 		rotation = 0.0
 		
@@ -69,7 +67,7 @@ func _physics_process(delta):
 				
 			if is_spindashing:
 				is_spindashing = false
-				velocity.x += spindash_timer*50 if not sprite.flip_h else spindash_timer*-50
+				velocity.x += spindash_timer*60 if not sprite.flip_h else spindash_timer*-60
 				is_rolling = true
 				lock_movement = true
 				hell = false
@@ -78,8 +76,8 @@ func _physics_process(delta):
 			if Input.is_action_just_pressed("jump") and dropdash_shit < 1:
 				dropdash_shit += 1
 				if dropdash_shit == 1:
-					print("DEATH!")
 					is_dropdashing = true
+					lock_movement = false
 					
 			if Input.is_action_just_released("jump") and is_dropdashing:
 				dropdash_shit = 0
@@ -151,8 +149,11 @@ func _physics_process(delta):
 	
 	velocity.y += gravity
 	
-	var snap:Vector2 = Vector2.DOWN * 128 if not is_jumping else Vector2.ZERO
-	velocity = move_and_slide_with_snap(velocity, snap, Vector2.UP, true, 4, 0.9)
+	var snap = transform.y * 128 if !is_jumping else Vector2.ZERO
+	velocity = move_and_slide_with_snap(velocity.rotated(rotation),
+			snap, -transform.y, false)
+	# Convert velocity back to local space.
+	velocity = velocity.rotated(-rotation)
 
 	play_animations()
 	
@@ -183,16 +184,16 @@ func play_animations():
 		sprite.play("spindash")
 	elif is_skidding:
 		sprite.play("skid")
-	elif not (is_rolling or is_ducking) and is_moving and abs(velocity.x) == 0:
+	elif not (is_rolling or is_ducking) and is_moving and abs(round(velocity.x)) == 0:
 		sprite.play("push")
-	elif abs(velocity.x) > 0:
+	elif abs(round(velocity.x)) > 0:
 		sprite.speed_scale = clamp(abs(velocity.x)/300.0, 0.5, 1.5)
 		sprite.play("walk")
-	elif abs(velocity.x) < 30 and Input.is_action_pressed("duck"):
+	elif abs(round(velocity.x)) < 30 and Input.is_action_pressed("duck"):
 		is_ducking = true
 		is_looking_up = false
 		sprite.play("duck")
-	elif abs(velocity.x) < 30 and Input.is_action_pressed("look_up"):
+	elif abs(round(velocity.x)) < 30 and Input.is_action_pressed("look_up"):
 		is_ducking = false
 		is_looking_up = true
 		sprite.play("look-up")
