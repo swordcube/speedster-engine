@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "Character",
 "language": "GDScript",
 "path": "res://scripts/character.gd"
+}, {
+"base": "Node2D",
+"class": "Monitor",
+"language": "GDScript",
+"path": "res://scenes/gameplay/level/objects/Monitor.gd"
 } ]
 _global_script_class_icons={
-"Character": ""
+"Character": "",
+"Monitor": ""
 }
 
 [application]
