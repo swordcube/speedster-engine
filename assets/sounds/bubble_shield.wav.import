@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/bubble_shield.wav-97aaa58f7c7ac02c51598bd30c11a866.sample"
+
+[deps]
+
+source_file="res://assets/sounds/bubble_shield.wav"
+dest_files=[ "res://.import/bubble_shield.wav-97aaa58f7c7ac02c51598bd30c11a866.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

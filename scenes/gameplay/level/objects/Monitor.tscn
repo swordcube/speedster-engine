@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/gameplay/level/objects/Monitor.gd" type="Script" id=1]
 [ext_resource path="res://assets/images/monitors/monitor.tres" type="SpriteFrames" id=2]
 [ext_resource path="res://assets/images/monitors/icons.tres" type="SpriteFrames" id=3]
+[ext_resource path="res://assets/sounds/badnik_kill.wav" type="AudioStream" id=4]
 
 [sub_resource type="Animation" id=2]
 resource_name = "broken"
@@ -202,6 +203,9 @@ shape = SubResource( 4 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
 position = Vector2( 0, -35 )
 shape = SubResource( 5 )
+
+[node name="Destroy" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_entered" from="Area2D2" to="." method="_on_Area2D2_body_entered"]

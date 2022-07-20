@@ -29,6 +29,8 @@ func _on_Area2D_body_entered(body):
 				$Area2D2.queue_free()
 				$AnimationPlayer.play("broken")
 				
+				$Destroy.play()
+				
 				get_item()
 
 func _on_Area2D2_body_entered(body):
@@ -41,6 +43,8 @@ func _on_Area2D2_body_entered(body):
 				$Area2D2.queue_free()
 				$AnimationPlayer.play("broken")
 				
+				Audio.playSFX("destroy_badnik")
+				
 				get_item()
 				
 				body.velocity.y = -body.jumpForce/1.2
@@ -49,6 +53,13 @@ func get_item():
 	yield(get_tree().create_timer(0.5), "timeout")
 	match type:
 		"ring":
+			Audio.playSFX("ring")
 			Global.rings += 10
 			if Global.rings > 999:
 				Global.rings = 999
+		"fire":
+			Audio.playSFX("fire_shield")
+		"lightning":
+			Audio.playSFX("lightning_shield")
+		"bubble":
+			Audio.playSFX("bubble_shield")

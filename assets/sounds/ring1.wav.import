@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/ring1.wav-416cbf82cc85737d4267e93ca9eefb95.sample"
+
+[deps]
+
+source_file="res://assets/sounds/ring1.wav"
+dest_files=[ "res://.import/ring1.wav-416cbf82cc85737d4267e93ca9eefb95.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

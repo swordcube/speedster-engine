@@ -1,8 +1,14 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scripts/character.gd" type="Script" id=1]
 [ext_resource path="res://assets/images/characters/sonic/sonic.tres" type="SpriteFrames" id=2]
 [ext_resource path="res://assets/images/characters/sonic/spindash_dust.tres" type="SpriteFrames" id=3]
+[ext_resource path="res://assets/sounds/jumping.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/sounds/rolling.wav" type="AudioStream" id=5]
+[ext_resource path="res://assets/sounds/skidding.wav" type="AudioStream" id=6]
+[ext_resource path="res://assets/sounds/spindash.wav" type="AudioStream" id=7]
+[ext_resource path="res://assets/sounds/spindash_release.wav" type="AudioStream" id=8]
+[ext_resource path="res://assets/sounds/dropdash.wav" type="AudioStream" id=9]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 21.0
@@ -26,7 +32,7 @@ playing = true
 visible = false
 scale = Vector2( 2, 2 )
 frames = ExtResource( 3 )
-frame = 4
+frame = 5
 speed_scale = 2.0
 playing = true
 offset = Vector2( -10, 0 )
@@ -34,3 +40,21 @@ offset = Vector2( -10, 0 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 13 )
 shape = SubResource( 1 )
+
+[node name="Jumping" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="Dropdash" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+
+[node name="Spindash" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[node name="SpindashRelease" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+
+[node name="Rolling" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="Skidding" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )

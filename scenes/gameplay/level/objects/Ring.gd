@@ -5,6 +5,7 @@ func _ready():
 
 func _on_Area2D_body_entered(body):
 	if body is Character:
+		Audio.playSFX("ring")
 		Global.rings += 1
 		if Global.rings > 999:
 			Global.rings = 999

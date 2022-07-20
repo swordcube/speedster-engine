@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/sounds/ring1.wav" type="AudioStream" id=1]
+[ext_resource path="res://autoload/scenes/Audio.gd" type="Script" id=2]
+[ext_resource path="res://assets/sounds/badnik_kill.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/sounds/bubble_shield.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/sounds/fire_shield.wav" type="AudioStream" id=5]
+[ext_resource path="res://assets/sounds/lightning_shield.wav" type="AudioStream" id=6]
+
+[node name="Audio" type="Node"]
+pause_mode = 2
+script = ExtResource( 2 )
+
+[node name="Collectables" type="Node" parent="."]
+
+[node name="Ring" type="AudioStreamPlayer" parent="Collectables"]
+stream = ExtResource( 1 )
+
+[node name="MonitorOrBadnik" type="Node" parent="."]
+
+[node name="Destroy" type="AudioStreamPlayer" parent="MonitorOrBadnik"]
+stream = ExtResource( 3 )
+
+[node name="FireShield" type="AudioStreamPlayer" parent="MonitorOrBadnik"]
+stream = ExtResource( 5 )
+
+[node name="BubbleShield" type="AudioStreamPlayer" parent="MonitorOrBadnik"]
+stream = ExtResource( 4 )
+
+[node name="LightningShield" type="AudioStreamPlayer" parent="MonitorOrBadnik"]
+stream = ExtResource( 6 )

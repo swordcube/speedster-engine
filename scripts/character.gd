@@ -24,13 +24,15 @@ var is_looking_up:bool = false
 var is_skidding:bool = false
 var is_moving:bool = false
 
+var old_is_skidding:bool = false
+
 var hell:bool = false
 var pain:bool = false
 
 var lock_movement:bool = false
 var lock_direction:String = "left"
 
-var spindash_timer:float = 0.0
+var spindash_timer:float = 5.0
 
 var velocity:Vector2 = Vector2.ZERO
 
@@ -47,6 +49,7 @@ func _physics_process(delta):
 			
 			is_rolling = true
 			velocity.x = -1500.0 if sprite.flip_h else 1500.0
+			$SpindashRelease.play()
 			
 		is_jumping = false
 		rotation = get_floor_normal().angle() + PI/2
@@ -56,7 +59,7 @@ func _physics_process(delta):
 		rotation = 0.0
 		
 	is_skidding = false
-	spindash_timer = lerp(spindash_timer, 5, delta)
+	spindash_timer = lerp(spindash_timer, 5.0, delta)
 		
 	if not Input.is_action_pressed("duck"):				
 		is_moving = Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right")
@@ -69,6 +72,8 @@ func _physics_process(delta):
 			
 		if is_on_floor():
 			if Input.is_action_just_pressed("jump"):
+				$Jumping.play(0.0)
+				
 				velocity.y = -jumpForce
 				dropdash_shit = 0
 				is_jumping = true
@@ -76,6 +81,8 @@ func _physics_process(delta):
 				lock_movement = false
 				
 			if is_spindashing:
+				$Spindash.stop()
+				$SpindashRelease.play()
 				is_spindashing = false
 				velocity.x += spindash_timer*60 if not sprite.flip_h else spindash_timer*-60
 				is_rolling = true
@@ -86,6 +93,7 @@ func _physics_process(delta):
 			if Input.is_action_just_pressed("jump") and dropdash_shit < 1:
 				dropdash_shit += 1
 				if dropdash_shit == 1:
+					$Dropdash.play()
 					is_dropdashing = true
 					lock_movement = false
 					
@@ -104,10 +112,21 @@ func _physics_process(delta):
 					if velocity.x < -(speedCap*1.5):
 						velocity.x = -(speedCap*1.5)
 						
-				if velocity.x > 20 and not is_rolling:
+				if is_on_floor() and velocity.x > 20 and not is_rolling:
 					velocity.x *= 0.95
 					sprite.flip_h = not sprite.flip_h
 					is_skidding = true
+					
+					if old_is_skidding != is_skidding:
+						old_is_skidding = is_skidding
+						var sound:AudioStreamPlayer = $Skidding
+						if not sound.playing:
+							sound.play()
+				else:
+					is_skidding = false
+					
+					if old_is_skidding != is_skidding:
+						old_is_skidding = is_skidding
 				
 			if Input.is_action_pressed("move_right"):
 				velocity.x += speed
@@ -119,10 +138,21 @@ func _physics_process(delta):
 					if velocity.x > speedCap*1.5:
 						velocity.x = speedCap*1.5
 						
-				if velocity.x < -20 and not is_rolling:
+				if is_on_floor() and velocity.x < -20 and not is_rolling:
 					velocity.x *= 0.95
 					sprite.flip_h = not sprite.flip_h
 					is_skidding = true
+					
+					if old_is_skidding != is_skidding:
+						old_is_skidding = is_skidding
+						var sound:AudioStreamPlayer = $Skidding
+						if not sound.playing:
+							sound.play()
+				else:
+					is_skidding = false
+					
+					if old_is_skidding != is_skidding:
+						old_is_skidding = is_skidding
 			
 	elif is_ducking or is_spindashing:
 		if abs(velocity.x) < 25:
@@ -131,11 +161,15 @@ func _physics_process(delta):
 				lock_movement = true
 				is_spindashing = true
 				pain = false
+				print(spindash_timer)
+				$Spindash.pitch_scale = 1.0+(spindash_timer-5.0)/40.0
+				$Spindash.play()
 				spindash_timer += 5.0
 				if spindash_timer > 30.0:
 					spindash_timer = 30.0
 	else:
 		if is_on_floor() and abs(velocity.x) > 55 and not lock_movement:
+			$Rolling.play()
 			hell = true
 			lock_movement = true
 			is_rolling = true
@@ -143,6 +177,8 @@ func _physics_process(delta):
 				
 	if not is_moving or (not pain and (lock_movement or hell)):
 		velocity.x *= slipperyness
+	elif is_rolling:
+		velocity.x *= 0.9895
 	
 	if abs(velocity.x) < 25:
 		is_rolling = false
