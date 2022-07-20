@@ -6,8 +6,7 @@ onready var scoreNumbers:Array = [
 	$"score/2",
 	$"score/3",
 	$"score/4",
-	$"score/5",
-	$"score/6"
+	$"score/5"
 ]
 
 onready var timeNumbers:Array = [
@@ -23,7 +22,7 @@ onready var ringNumbers:Array = [
 ]
 
 func _process(delta):
-	var score:String = Global.get_string_with_digits(Global.score, 7)
+	var score:String = Global.get_string_with_digits(Global.score, 6)
 	for i in scoreNumbers.size():
 		var frame:int = int(score[i]) if score[i] != "A" else 10
 		scoreNumbers[i].set_frame(frame)

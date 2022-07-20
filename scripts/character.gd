@@ -50,13 +50,23 @@ func _physics_process(delta):
 			
 		is_jumping = false
 		rotation = get_floor_normal().angle() + PI/2
+		if is_jumping or is_rolling:
+			sprite.rotation = -rotation
 	else:
 		rotation = 0.0
 		
 	is_skidding = false
 	spindash_timer = lerp(spindash_timer, 5, delta)
 		
-	if not Input.is_action_pressed("duck"):
+	if not Input.is_action_pressed("duck"):				
+		is_moving = Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right")
+		
+		if Input.is_action_pressed("move_left"):
+			sprite.flip_h = true
+			
+		if Input.is_action_pressed("move_right"):
+			sprite.flip_h = false
+			
 		if is_on_floor():
 			if Input.is_action_just_pressed("jump"):
 				velocity.y = -jumpForce
@@ -82,11 +92,9 @@ func _physics_process(delta):
 			if Input.is_action_just_released("jump") and is_dropdashing:
 				dropdash_shit = 0
 				is_dropdashing = false
-				
-		is_moving = Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right")
+		
 		if not lock_movement:
 			if Input.is_action_pressed("move_left"):
-				sprite.flip_h = true
 				velocity.x -= speed
 				
 				if not (is_rolling or is_jumping):
@@ -97,12 +105,11 @@ func _physics_process(delta):
 						velocity.x = -(speedCap*1.5)
 						
 				if velocity.x > 20 and not is_rolling:
-					sprite.flip_h = not sprite.flip_h
 					velocity.x *= 0.95
+					sprite.flip_h = not sprite.flip_h
 					is_skidding = true
 				
 			if Input.is_action_pressed("move_right"):
-				sprite.flip_h = false
 				velocity.x += speed
 				
 				if not (is_rolling or is_jumping):
@@ -113,8 +120,8 @@ func _physics_process(delta):
 						velocity.x = speedCap*1.5
 						
 				if velocity.x < -20 and not is_rolling:
-					sprite.flip_h = not sprite.flip_h
 					velocity.x *= 0.95
+					sprite.flip_h = not sprite.flip_h
 					is_skidding = true
 			
 	elif is_ducking or is_spindashing:
@@ -164,6 +171,8 @@ func play_animations():
 	sprite.speed_scale = 1.0
 
 	if is_dropdashing:
+		is_rolling = false
+		lock_movement = false
 		sprite.play("dropdash")
 	elif not is_jumping and (not is_on_floor() and velocity.y > 0):
 		is_rolling = false
